@@ -19,12 +19,12 @@ namespace ToDo.Controllers
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody]UserViewModel userParam)
         {
-            var user = _userService.Authenticate(userParam.Username, userParam.Password);
+            var token = _userService.Authenticate(userParam.Username, userParam.Password);
 
-            if (user == null)
+            if (token == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(user);
+            return Ok(token);
         }
     }
 }
