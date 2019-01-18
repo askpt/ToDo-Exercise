@@ -40,8 +40,8 @@ namespace ToDo
             })
             .AddJwtBearer(x =>
             {
-                // For testing purposes only
                 x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -72,6 +72,8 @@ namespace ToDo
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
