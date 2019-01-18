@@ -1,4 +1,4 @@
-namespace ToDo.ViewModels
+namespace ToDo
 {
     public class AppSettings
     {
