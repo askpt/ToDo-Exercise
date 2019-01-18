@@ -8,6 +8,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { TodoListComponent } from './todo-list/todo-list.component';
+import { AuthGuardService } from './_guards/auth-guard.service';
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -16,7 +18,8 @@ export function getToken() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    TodoListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,7 +27,9 @@ export function getToken() {
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'login', component: HomeComponent, pathMatch: 'full' },
+      { path: 'todo-list', component: TodoListComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
+      { path: '**', redirectTo: 'login'},
     ]),
     JwtModule.forRoot({
       config: {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,8 @@ export class HomeComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private userService: UserService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
     const password = this.loginForm.value.password;
     this.userService.authenticate(username, password).subscribe(t => {
       this.authService.storeToken(t);
+      this.router.navigate(['todo-list']);
     });
   }
 }
