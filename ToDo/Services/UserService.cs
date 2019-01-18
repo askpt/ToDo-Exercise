@@ -21,14 +21,20 @@ namespace ToDo.Services
             _appSettings = appSettings.Value;
         }
 
-        private List<User> _users = new List<User>
+        private IList<User> UserRepository
         {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "pwd123" }
-        };
+            get
+            {
+                return new List<User>
+                {
+                    new User { Id = 1, Username = "test", Password = "pwd123" }
+                };
+            }
+        }
 
         public string Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = UserRepository.SingleOrDefault(x => x.Username == username && x.Password == password);
 
             // return null if user not found
             if (user == null)
