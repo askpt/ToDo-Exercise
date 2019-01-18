@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -23,9 +25,7 @@ export class HomeComponent implements OnInit {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
     this.userService.authenticate(username, password).subscribe(t => {
-      localStorage.setItem('token', t);
-      console.log(t);
-      alert('Logged in');
+      this.authService.storeToken(t);
     });
   }
 }
