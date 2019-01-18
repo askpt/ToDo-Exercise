@@ -8,5 +8,9 @@ namespace ToDo.Interfaces
         IEnumerable<Todo> GetAllTodo();
 
         IEnumerable<Todo> GetAllTodoByUser(int userId);
+
+        int CreateTodo(string description, int userId);
+
+        bool DeleteTodo(int todoId, int userId);
     }
 }

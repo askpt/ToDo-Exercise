@@ -19,18 +19,63 @@ namespace ToDo.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            int userId;
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
+            var todo = _todoService.GetAllTodoByUser(userId.Value);
+            return Ok(todo);
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody]string description)
+        {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
+            var id = _todoService.CreateTodo(description, userId.Value);
+
+            return Ok(id);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromQuery]int id)
+        {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
+            var isDeleted = _todoService.DeleteTodo(id, userId.Value);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        private int? GetUserId()
+        {
+            int? userId;
             try
             {
                 userId = int.Parse(User.Identity.Name);
             }
             catch (Exception)
             {
-                return BadRequest();
+                userId = null;
             }
-
-            var todo = _todoService.GetAllTodoByUser(userId);
-            return Ok(todo);
+            return userId;
         }
     }
 }

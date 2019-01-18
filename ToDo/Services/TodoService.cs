@@ -7,25 +7,48 @@ namespace ToDo.Services
 {
     public class TodoService : ITodoService
     {
-        private IList<Todo> TodosRepository
+        private readonly TodoContext _context;
+
+        public TodoService(TodoContext context)
         {
-            get
-            {
-                return new List<Todo>
-                {
-                    new Todo { Id = 1, Description = "AAA", UserId = 1 }
-                };
-            }
+            _context = context;
         }
 
         public IEnumerable<Todo> GetAllTodo()
         {
-            return TodosRepository;
+            return _context.Todos;
         }
 
         public IEnumerable<Todo> GetAllTodoByUser(int userId)
         {
             return GetAllTodo()?.Where(t => t.UserId == userId);
+        }
+
+        public int CreateTodo(string description, int userId)
+        {
+            var todo = new Todo
+            {
+                Description = description,
+                UserId = userId
+            };
+
+            _context.Todos.Add(todo);
+            _context.SaveChanges();
+            return todo.Id;
+        }
+
+        public bool DeleteTodo(int todoId, int userId)
+        {
+            var todo = _context.Todos.FirstOrDefault(t => t.Id == todoId && t.UserId == userId);
+            if (todo == null)
+            {
+                return false;
+            }
+
+            _context.Todos.Remove(todo);
+            _context.SaveChanges();
+
+            return true;
         }
     }
 }

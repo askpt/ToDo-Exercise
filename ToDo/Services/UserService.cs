@@ -14,27 +14,20 @@ namespace ToDo.Services
 {
     public class UserService : IUserService
     {
+        private readonly TodoContext _context;
+
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, 
+            TodoContext context)
         {
+            _context = context;
             _appSettings = appSettings.Value;
-        }
-
-        private IList<User> UserRepository
-        {
-            get
-            {
-                return new List<User>
-                {
-                    new User { Id = 1, Username = "test", Password = "pwd123" }
-                };
-            }
         }
 
         public string Authenticate(string username, string password)
         {
-            var user = UserRepository.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = _context.Users.SingleOrDefault(x => x.Username == username && x.Password == password);
 
             // return null if user not found
             if (user == null)
