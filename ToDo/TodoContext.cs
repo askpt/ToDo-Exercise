@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using ToDo.Models;
 
 namespace ToDo
 {
+    [ExcludeFromCodeCoverage]
     public class TodoContext : DbContext
     {
         public TodoContext(DbContextOptions<TodoContext> options)

@@ -22,7 +22,7 @@ namespace ToDo.Controllers
             var token = _userService.Authenticate(userParam.Username, userParam.Password);
 
             if (token == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest("Username or password is incorrect");
 
             return Ok(token);
         }
