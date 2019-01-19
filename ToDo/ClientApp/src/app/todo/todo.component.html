@@ -1,0 +1,5 @@
+<h2>{{todo.description}}</h2>
+
+<div>Last Updated: {{todo.lastUpdated | date: 'long'}}</div>
+
+<button type="submit" class="btn btn-primary mt-3" [routerLink]="['/todo-list/']">Back</button>

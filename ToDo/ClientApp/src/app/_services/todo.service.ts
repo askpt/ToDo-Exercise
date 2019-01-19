@@ -14,6 +14,10 @@ export class TodoService {
     return this.http.get<Array<Todo>>('api/todo');
   }
 
+  getTodo(id: number): Observable<Todo> {
+    return this.http.get<Todo>(`api/todo?id=${id}`);
+  }
+
   addTodo(description: string): Observable<number> {
     const body = {
       description: description

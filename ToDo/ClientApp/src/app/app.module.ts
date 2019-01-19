@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { AuthGuardService } from './_guards/auth-guard.service';
+import { TodoComponent } from './todo/todo.component';
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -19,7 +20,8 @@ export function getToken() {
   declarations: [
     AppComponent,
     HomeComponent,
-    TodoListComponent
+    TodoListComponent,
+    TodoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +31,7 @@ export function getToken() {
     RouterModule.forRoot([
       { path: 'login', component: HomeComponent, pathMatch: 'full' },
       { path: 'todo-list', component: TodoListComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
+      { path: 'todo/:id', component: TodoComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: '**', redirectTo: 'login'},
     ]),
     JwtModule.forRoot({

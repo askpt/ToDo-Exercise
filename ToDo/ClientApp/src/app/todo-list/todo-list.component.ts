@@ -30,7 +30,8 @@ export class TodoListComponent implements OnInit {
       this.todos.push({
         id: id,
         description: description,
-        userId: null
+        userId: null,
+        lastUpdated: null
       });
 
       this.addTodoForm.reset();
