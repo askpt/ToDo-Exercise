@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ToDo.Interfaces;
 using ToDo.Models;
 
@@ -36,7 +37,8 @@ namespace ToDo.Services
             {
                 Description = description,
                 UserId = userId,
-                LastUpdated = DateTime.UtcNow
+                LastUpdated = DateTime.UtcNow,
+                Checked = false
             };
 
             _context.Todos.Add(todo);
@@ -56,6 +58,24 @@ namespace ToDo.Services
             _context.SaveChanges();
 
             return true;
+        }
+
+        public Todo UpdateTodo(int id, string description, bool check, int userId)
+        {
+            var todo = GetTodo(id, userId);
+            if (todo == null)
+            {
+                return null;
+            }
+
+            todo.Description = description;
+            todo.Checked = check;
+            todo.LastUpdated = DateTime.UtcNow;
+
+            _context.Entry(todo).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return todo;
         }
     }
 }

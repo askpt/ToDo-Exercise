@@ -73,6 +73,23 @@ namespace ToDo.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody]TodoViewModel todoVM)
+        {
+            var userId = GetUserId();
+            if (userId == null || todoVM.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var todo = _todoService.UpdateTodo(id, todoVM.Description, todoVM.Check, userId.Value);
+            if (todo == null)
+            {
+                return BadRequest();
+            }
+            return Ok(todo);
+        }
+
         private int? GetUserId()
         {
             int? userId;

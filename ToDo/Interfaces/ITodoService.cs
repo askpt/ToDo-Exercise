@@ -14,5 +14,7 @@ namespace ToDo.Interfaces
         bool DeleteTodo(int todoId, int userId);
 
         Todo GetTodo(int id, int userId);
+
+        Todo UpdateTodo(int id, string description, bool check, int userId);
     }
 }
