@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Interfaces;
+using ToDo.ViewModels;
 
 namespace ToDo.Controllers
 {
@@ -30,7 +31,7 @@ namespace ToDo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]string description)
+        public IActionResult Post([FromBody]TodoViewModel todoViewModel)
         {
             var userId = GetUserId();
             if (userId == null)
@@ -38,7 +39,7 @@ namespace ToDo.Controllers
                 return BadRequest();
             }
 
-            var id = _todoService.CreateTodo(description, userId.Value);
+            var id = _todoService.CreateTodo(todoViewModel.Description, userId.Value);
 
             return Ok(id);
         }
