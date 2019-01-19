@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../_services/todo.service';
 import { Todo } from '../_model/todo';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-list',
@@ -12,7 +14,9 @@ export class TodoListComponent implements OnInit {
   todos: Todo[];
   addTodoForm: FormGroup;
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService,
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
     this.todos = new Array<Todo>();
@@ -47,5 +51,10 @@ export class TodoListComponent implements OnInit {
 
   updateTodo(todo: Todo): void {
     this.todoService.updateTodo(todo.id, todo.description, todo.checked).subscribe();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 }
