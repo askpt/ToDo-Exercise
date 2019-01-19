@@ -2,6 +2,7 @@
 
 <div class="row">
   <div class="col-12" *ngFor="let todo of todos">
+    <input class="form-check-input" type="checkbox" [(checked)]="todo.checked" (change)="todo.checked = !todo.checked;updateTodo(todo)">
     <a [routerLink]="['/todo/', todo.id]">{{ todo.description }}</a>
     <button type="button" class="btn btn-danger float-right" (click)="deleteTodo(todo)">Delete</button>
   </div>

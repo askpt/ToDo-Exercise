@@ -3,4 +3,5 @@ export class Todo {
     description: string;
     userId: number;
     lastUpdated: Date;
+    checked: boolean;
 }

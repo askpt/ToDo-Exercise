@@ -31,6 +31,7 @@ export class TodoListComponent implements OnInit {
         id: id,
         description: description,
         userId: null,
+        checked: false,
         lastUpdated: null
       });
 
@@ -42,5 +43,9 @@ export class TodoListComponent implements OnInit {
     this.todoService.deleteTodo(todo.id).subscribe(() => {
       this.todos = this.todos.filter(t => t.id !== todo.id);
     });
+  }
+
+  updateTodo(todo: Todo): void {
+    this.todoService.updateTodo(todo.id, todo.description, todo.checked).subscribe();
   }
 }

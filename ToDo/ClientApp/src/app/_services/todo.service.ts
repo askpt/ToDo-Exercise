@@ -34,4 +34,13 @@ export class TodoService {
   deleteTodo(id: number): Observable<any> {
     return this.http.delete(`api/todo?id=${id}`);
   }
+
+  updateTodo(id: number, description: string, check: boolean): Observable<Todo> {
+    const body = {
+      description: description,
+      id: id,
+      check: check
+    };
+    return this.http.put<Todo>(`api/todo/${id}`, body);
+  }
 }
