@@ -12,5 +12,7 @@ namespace ToDo.Interfaces
         int CreateTodo(string description, int userId);
 
         bool DeleteTodo(int todoId, int userId);
+
+        Todo GetTodo(int id, int userId);
     }
 }

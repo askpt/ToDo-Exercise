@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDo.Interfaces;
@@ -24,12 +25,18 @@ namespace ToDo.Services
             return GetAllTodo()?.Where(t => t.UserId == userId);
         }
 
+        public Todo GetTodo(int id, int userId)
+        {
+            return GetAllTodo()?.FirstOrDefault(t => t.UserId == userId && t.Id == id);
+        }
+
         public int CreateTodo(string description, int userId)
         {
             var todo = new Todo
             {
                 Description = description,
-                UserId = userId
+                UserId = userId,
+                LastUpdated = DateTime.UtcNow
             };
 
             _context.Todos.Add(todo);

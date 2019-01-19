@@ -18,7 +18,7 @@ namespace ToDo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery]int? id)
         {
             var userId = GetUserId();
             if (userId == null)
@@ -26,8 +26,16 @@ namespace ToDo.Controllers
                 return BadRequest();
             }
 
-            var todo = _todoService.GetAllTodoByUser(userId.Value);
-            return Ok(todo);
+            if (id.HasValue)
+            {
+                var todo = _todoService.GetTodo(id.Value, userId.Value);
+                return Ok(todo);
+            }
+            else
+            {
+                var todo = _todoService.GetAllTodoByUser(userId.Value);
+                return Ok(todo);
+            }
         }
 
         [HttpPost]
