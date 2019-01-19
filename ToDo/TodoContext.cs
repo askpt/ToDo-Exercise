@@ -13,6 +13,7 @@ namespace ToDo
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(new User { Id = 1, Username = "test", Password = "pwd123" });
+            modelBuilder.Entity<User>().HasData(new User { Id = 2, Username = "temp", Password = "pwd123" });
         }
 
         public DbSet<Todo> Todos { get; set; }
